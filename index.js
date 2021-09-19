@@ -20,10 +20,6 @@ const testRoomDatas =  {
 
 const getParticipantsNum = () => { return testRoomDatas.participants.length }
 
-const sendNewRoomDataToEveryone = () => {
-    io.emit('room-updated', testRoomDatas);
-}
-
 app.get('/', (req, res) => {
   res.sendStatus(200)
 });
@@ -45,17 +41,12 @@ io.on('connection', (socket) => {
 
         testRoomDatas.participants.push(userData)
 
-        console.log(testRoomDatas)
-        socket.broadcast.emit('room-updated', testRoomDatas)
-
-        sendNewRoomDataToEveryone()
+        socket.emit('room-updated', testRoomDatas);
     });
 
     socket.on('leave', (id) => { 
         testRoomDatas.participants = testRoomDatas.participants.filter(p => p.id !== id)
-        socket.broadcast.emit()
-
-        sendNewRoomDataToEveryone()
+        socket.emit('room-updated', testRoomDatas);
     });
 
     socket.on('request-data', () => { 
@@ -63,7 +54,7 @@ io.on('connection', (socket) => {
     });
   
     socket.on('disconnect', () => {
-      console.log('user disconnected');
+      console.log('a user lost connection');
     });
 });
 const port = process.env.PORT || 80;

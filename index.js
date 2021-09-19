@@ -66,7 +66,7 @@ io.on('connection', (socket) => {
       console.log('user disconnected');
     });
 });
-
-server.listen(3004, () => {
-  console.log('listening on *:3004');
+const port = process.env.PORT || 80;
+server.listen(port, () => {
+  console.log('listening on ' + port + '...');
 });

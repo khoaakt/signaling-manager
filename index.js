@@ -7,7 +7,7 @@ const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
     origin: "*",
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST", "PUT", "DELETE"]
   }
 });
 
@@ -21,7 +21,7 @@ const testRoomDatas =  {
 const getParticipantsNum = () => { return testRoomDatas.participants.length }
 
 app.get('/', (req, res) => {
-  res.sendStatus(200)
+  res.send(testRoomDatas)
 });
 
 app.get('/reset', (req, res) => {

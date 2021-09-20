@@ -41,12 +41,12 @@ io.on('connection', (socket) => {
 
         testRoomDatas.participants.push(userData)
 
-        socket.emit('room-updated', testRoomDatas);
+        io.emit('room-updated', testRoomDatas);
     });
 
     socket.on('leave', (id) => { 
         testRoomDatas.participants = testRoomDatas.participants.filter(p => p.id !== id)
-        socket.emit('room-updated', testRoomDatas);
+        io.emit('room-updated', testRoomDatas);
     });
 
     socket.on('request-data', () => { 
@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
       console.log('a user lost connection');
     });
 });
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 1111;
 server.listen(port, () => {
   console.log('listening on ' + port + '...');
 });
